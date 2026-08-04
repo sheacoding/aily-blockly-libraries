@@ -25,7 +25,7 @@
   "description_pt": "Biblioteca de voz Huoshan AI com WiFi, audio I2S, ASR/TTS Doubao, conversa Coze e painel de toque opcional.",
   "description_ru": "Голосовая библиотека Huoshan AI с WiFi, I2S-аудио, Doubao ASR/TTS, Coze и опциональной сенсорной панелью.",
   "description_ar": "مكتبة صوت Huoshan AI تدعم WiFi وصوت I2S وDoubao ASR/TTS ودردشة Coze ولوحة لمس اختيارية.",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "compatibility": {
     "core": [
       "esp32:esp32:esp32",
@@ -63,10 +63,8 @@
     "postinstall": "node setup-partition.js"
   },
   "dependencies": {
-    "@aily-project/lib-arduinojson": "1.0.0",
     "@aily-project/lib-lvgl": "1.0.1",
-    "@aily-project/lib-tft-espi": "2.5.43",
-    "@aily-project/lib-websockets": "2.7.1"
+    "@aily-project/lib-tft-espi": "2.5.43"
   },
   "devDependencies": {},
   "tested": false,

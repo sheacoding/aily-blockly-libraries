@@ -5,10 +5,8 @@ const { execFileSync } = require('child_process');
 const packageName = '@aily-project/lib-huoshan-ai-voice';
 const lvglPackageName = '@aily-project/lib-lvgl';
 const requiredDependencies = {
-  '@aily-project/lib-arduinojson': '1.0.0',
   [lvglPackageName]: '1.0.1',
-  '@aily-project/lib-tft-espi': '2.5.43',
-  '@aily-project/lib-websockets': '2.7.1'
+  '@aily-project/lib-tft-espi': '2.5.43'
 };
 
 const screenDependencyBlockTypes = {
@@ -116,7 +114,7 @@ function patchProjectDependencies(projectRoot) {
   if (!changed && pkg.dependencies) return;
   pkg.dependencies = dependencies;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
-  console.log('[huoshan-ai-voice] ensured project dependencies for ASR, TTS, WebSocket, TFT, LVGL, and touch support.');
+  console.log('[huoshan-ai-voice] ensured project dependencies for optional TFT and LVGL screen support.');
 }
 
 function projectUsesScreenBlocks(pkg) {
@@ -483,20 +481,9 @@ function patchTempLvglConfig(projectRoot) {
 
     const current = fs.readFileSync(confPath, 'utf8');
     let next = current.replace(
-      /^(\s*#define\s+LV_FONT_SOURCE_HAN_SANS_SC_14_CJK\s+)\d+(\s*(?:\/\/.*)?)$/m,
-      (match, prefix, suffix) => `${prefix}1${suffix}`
-    );
-    next = next.replace(
       /^(\s*#define\s+LV_FONT_FMT_TXT_LARGE\s+)\d+(\s*(?:\/\/.*)?)$/m,
       (match, prefix, suffix) => `${prefix}1${suffix}`
     );
-    if (!/^\s*#define\s+LV_FONT_SOURCE_HAN_SANS_SC_14_CJK\b/m.test(next)) {
-      next = next.replace(
-        /(\r?\n\s*#define\s+LV_FONT_MONTSERRAT_48\s+\d+\s*(?:\/\/.*)?\r?\n)/,
-        `$1#define LV_FONT_SOURCE_HAN_SANS_SC_14_CJK 1\n`
-      );
-    }
-
     if (!/^\s*#define\s+LV_FONT_FMT_TXT_LARGE\b/m.test(next)) {
       next = next.replace(
         /(\r?\n\s*#define\s+LV_USE_FONT_COMPRESSED\s+\d+\s*(?:\/\/.*)?\r?\n)/,
@@ -511,7 +498,7 @@ function patchTempLvglConfig(projectRoot) {
   }
 
   if (changed) {
-    console.log('[huoshan-ai-voice] enabled LVGL Source Han Sans SC screen font support.');
+    console.log('[huoshan-ai-voice] enabled LVGL large text font support for the bundled screen font.');
   }
 }
 
@@ -720,10 +707,10 @@ try {
   patchTempBuildConfig(projectRoot);
   patchTempPackageConfig(projectRoot);
   normalizeProjectLvglLocalLibrary(projectRoot);
+  patchTempLvglConfig(projectRoot);
   // The screen now uses the bundled full-coverage HuoshanAI_CN_15 font instead of
-  // the LVGL CJK radical subset, so we deliberately skip the legacy font/lv_conf
-  // rewrites that used to swap it out.
-  // patchTempLvglConfig(projectRoot);
+  // the LVGL CJK radical subset, so we deliberately skip the legacy font rewrites
+  // that used to swap generated code to LVGL's built-in CJK radical subset.
   // removeLegacyFontSources(projectRoot);
   // patchLegacyTempScreenFont(projectRoot);
 } catch (error) {

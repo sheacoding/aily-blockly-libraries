@@ -175,8 +175,8 @@ function huoshanAiEnsureRuntime(generator) {
   huoshanAiEnsureWiFiLib(generator);
   generator.addLibrary('huoshan_ai_http', '#include <HTTPClient.h>');
   generator.addLibrary('huoshan_ai_secure', '#include <WiFiClientSecure.h>');
-  generator.addLibrary('huoshan_ai_json', '#include <ArduinoJson.h>');
-  generator.addLibrary('huoshan_ai_ws', '#include <WebSocketsClient.h>');
+  generator.addLibrary('huoshan_ai_json', '#include <huoshan_ai_ArduinoJson.h>');
+  generator.addLibrary('huoshan_ai_ws', '#include <huoshan_ai_WebSocketsClient.h>');
   generator.addLibrary('huoshan_ai_i2s', '#include <driver/i2s.h>');
   generator.addLibrary('huoshan_ai_gpio', '#include <driver/gpio.h>');
   generator.addLibrary('huoshan_ai_semphr', '#include <freertos/semphr.h>');

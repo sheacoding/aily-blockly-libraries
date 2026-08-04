@@ -7,7 +7,7 @@ ESP32 voice blocks for WiFi, I2S audio, Doubao ASR/TTS, Coze chat, and an option
 | Field | Value |
 |-------|-------|
 | Package | @aily-project/lib-huoshan-ai-voice |
-| Version | 0.2.5 |
+| Version | 0.2.6 |
 | Author | ericoding |
 | Source | G:\AilyProject\xiaozhi-ai-arduino |
 | License | Project source license |
@@ -18,7 +18,7 @@ ESP32/ESP32-S3 WiFi boards with I2S microphone/speaker. Screen defaults target S
 
 ## Description
 
-The voice loop works without display hardware. Screen blocks initialize LVGL, show state/chat text, provide touch-to-talk, and bundle a wider 15px Source Han CJK LVGL font for Chinese chat text.
+The voice loop works without display hardware and bundles its ArduinoJson/WebSockets runtime sources for local-library imports. Screen blocks initialize LVGL, show state/chat text, provide touch-to-talk, and include a bundled 15px Source Han CJK LVGL font through the screen runtime header.
 
 ## Quick Start
 
